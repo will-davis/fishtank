@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<title>Fish Tank</title>
+<style>
+body{background-color:black;color:white;}
+#container{width:100%;}
+.topl, .topm, .topr, .midl, .midm, .midr, .bottoml, .bottomm, .bottomr{display:inline-block;width:30%;padding-top:1px;padding-left:2%;height:0px;}
+</style>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+if (!!window.EventSource) {
+  var source = new EventSource('/');
+  source.onmessage = function(e) {
+    var holder = e.data;
+    var stream = holder.split("%");
+    $("#data").text(e.data);
+    var testicle = '<div class="tl" style="font-family: Arial;font-size: 55px;color: #40929D">PH: ' + stream[0] + '</div>'
+    var testicle2 = '<div class="ml" style="font-family: Arial;font-size: 55px;color: #E8D754">TEMP: ' + stream[1] + '</div>'
+    var testicle3 = '<div class="bl" style="font-family: Arial;font-size: 55px;color: #D15641">SUMP: ' + stream[2] + '</div>'
+    $(".topl").html(testicle);
+    $(".midl").html(testicle2);
+    $(".bottoml").html(testicle3);
+  }
+}
+
+</script>
+<script>
+window.setInterval(function()
+{
+    document.getElementById('ph_img').src = "/static/ph.png?random="+new Date().getTime();
+    document.getElementById('temp_img').src = "/static/temp.png?random="+new Date().getTime();
+    document.getElementById('sump_img').src = "/static/sump.png?random="+new Date().getTime();
+    document.getElementById('ph_hr_img').src = "/static/ph_hr.png?random="+new Date().getTime();
+    document.getElementById('temp_hr_img').src = "/static/temp_hr.png?random="+new Date().getTime();
+    document.getElementById('sump_hr_img').src = "/static/sump_hr.png?random="+new Date().getTime();
+}, 10000);
+</script>
+</head>
+<body>
+
+
+
+<div id="container">
+
+<div class="topl"><div class="tl" style="font-family: Arial;font-size: 12px;color: #FFFFFF"></div></div>
+<div class="topm"><div class="tm" style="font-family: Arial;font-size: 12px;color: #FFFFFF"><img src="/static/ph.png" alt="pic1" height="100%" width="100%" id="ph_img"></div></div>
+<div class="topr"><div class="tr" style="font-family: Arial;font-size: 12px;color: #FFFFFF"><img src="/static/ph_hr.png" alt="pic1" height="100%" width="100%" id="ph_hr_img"></div></div></div></div>
+<div class="midl"><div class="ml" style="font-family: Arial;font-size: 12px;color: #FFFFFF"></div></div>
+<div class="midm"><div class="mm" style="font-family: Arial;font-size: 12px;color: #FFFFFF"><img src="/static/temp.png" alt="pic3" height="100%" width="100%" id="temp_img"></div></div>
+<div class="midr"><div class="mr" style="font-family: Arial;font-size: 12px;color: #FFFFFF"><img src="/static/temp_hr.png" alt="pic3" height="100%" width="100%" id="temp_hr_img"></div></div></div></div>
+<div class="bottoml"><div class="bl" style="font-family: Arial;font-size: 12px;color: #FFFFFF"></div></div>
+<div class="bottomm"><div class="bm" style="font-family: Arial;font-size: 12px;color: #FFFFFF"><img src="/static/sump.png" alt="pic2" height="100%" width="100%" id="sump_img"></div></div>
+<div class="bottomr"><div class="br" style="font-family: Arial;font-size: 12px;color: #FFFFFF"><img src="/static/sump_hr.png" alt="pic2" height="100%" width="100%" id="sump_hr_img"></div></div></div></div>
+</div>
+</body>
+</html>
+
