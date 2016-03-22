@@ -115,6 +115,7 @@ time.sleep(1)
 
 def distancesump():
     global sumprrd
+    noprint = 0
     while x < 100:
         timeoutstart = time.time()
         timeoutstart = timeoutstart + 5
@@ -130,16 +131,20 @@ def distancesump():
         while GPIO.input(GPIO_IN_sumpecho) == 1:
             pulse_end = time.time()
             if time.time() > timeoutstart:
+                noprint = 1
                 break
         pulse_duration = pulse_end - pulse_start
         instantdistance = pulse_duration * 17150
         instantdistance = round(instantdistance, 2)
         distancestring = str(instantdistance)
         try:
-            hotconn.execute(
-                "UPDATE tank SET sump = ? WHERE id = ?", (distancestring, 1))
-            hotconn.commit()
-            sumprrd = distancestring
+            if noprint < 1:
+                hotconn.execute(
+                    "UPDATE tank SET sump = ? WHERE id = ?", (distancestring, 1))
+                hotconn.commit()
+                sumprrd = distancestring
+            else:
+                noprint = 0
         except:
             print "\033[1;31mSUMP DISTANCE WRITE SQL ERROR\033[1;0m"
     return instantdistance
